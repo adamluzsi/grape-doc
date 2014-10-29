@@ -1,4 +1,4 @@
-grape-doc
-=========
+Grape-Doc
+========
 
-Grape documentation generator
+Grape documentation generator, it's in alpha stage!
