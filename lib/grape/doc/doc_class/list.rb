@@ -1,13 +1,20 @@
 module GrapeDoc
-  class ApiDocumentation
+  class ApiDocParts
 
     class List < ArrayObject
       self.markdown = '*'
+
+      def initialize()
+
+      end
+
     end
 
-    class NumericalList < ArrayObject
+    class NumericalList < List
       self.markdown = '#'
     end
+
+
 
   end
 end

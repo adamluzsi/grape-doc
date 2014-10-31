@@ -1,5 +1,5 @@
 module GrapeDoc
-  class ApiDocumentation
+  class ApiDocParts
 
     class Sidebar < StringObject
       def to_textile

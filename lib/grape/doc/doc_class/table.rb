@@ -1,5 +1,5 @@
 module GrapeDoc
-  class ApiDocumentation
+  class ApiDocParts
 
     class Table < ArrayObject
 

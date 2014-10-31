@@ -1,5 +1,5 @@
 module GrapeDoc
-  class ApiDocumentation
+  class ApiDocParts
 
     module Parser
       class << self
@@ -11,13 +11,13 @@ module GrapeDoc
               object.map{|e| self.format_parse(*e) }
 
             else
-              object
+              self.format_parse(object)
 
           end
         end
 
         def format_parse(text,*args)
-          text = text.dup
+          text = text.dup.to_s
           args.each do |command|
             case command.to_s.downcase
 

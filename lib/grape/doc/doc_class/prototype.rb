@@ -1,7 +1,7 @@
 module GrapeDoc
-  class ApiDocumentation
+  class ApiDocParts
 
-    class StringObject < String
+    class StringBasic < String
 
       class << self
         def markdown=(obj)
@@ -21,8 +21,14 @@ module GrapeDoc
         self.class.markdown
       end
 
+      alias to_textile to_s
+
+    end
+
+    class StringObject < StringBasic
+
       def to_textile
-        "#{markdown}. #{super}"
+        "#{markdown}. #{self.to_s}"
       end
 
     end

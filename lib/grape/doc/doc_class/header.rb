@@ -1,5 +1,5 @@
 module GrapeDoc
-  class ApiDocumentation
+  class ApiDocParts
 
     class H1 < StringObject
     end
@@ -21,6 +21,9 @@ module GrapeDoc
 
     class Block < StringObject
       self.markdown = "bq"
+    end
+
+    class Br < StringBasic
     end
 
   end
