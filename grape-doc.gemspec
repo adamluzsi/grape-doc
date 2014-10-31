@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
 
   spec.add_dependency "grape"
+  spec.add_dependency "RedCloth"
   spec.add_dependency "rack-test"
   spec.add_dependency "rack-test-poc"
 
