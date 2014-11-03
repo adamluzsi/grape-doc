@@ -1,6 +1,7 @@
 module GrapeDoc
   class Generator
 
+    attr_accessor :file_path
     def initialize(opts={})
       
       raise(ArgumentError,'invalid options given') unless opts.class <= Hash
@@ -9,6 +10,8 @@ module GrapeDoc
               format: 'html'
           }.merge(opts)
       )
+
+      self.file_path= opts[:path] || opts['path'] || File.join(Helpers.doc_folder_path,'api_doc.html')
 
       process_head
       process_table_of_content
@@ -21,7 +24,8 @@ module GrapeDoc
     end
 
     def save
-      File.write File.join(Helpers.doc_folder_path,'api_doc.html'),
+
+      File.write self.file_path,
                  document.to_textile.to_html
 
       true;rescue;false
@@ -121,7 +125,11 @@ module GrapeDoc
 
     def new(*args)
       Generator.new(*args)
-    end;alias generate new
+    end
+
+    def generate(*args)
+      Generator.new(*args).save
+    end;alias save generate
 
   end
 

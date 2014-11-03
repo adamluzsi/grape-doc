@@ -12,7 +12,7 @@ module GrapeDoc
       def doc_folder_path
         @doc_folder_path ||= -> {
           doc_folder_path = File.join(RackTestPoc.root,'doc')
-          File.mkdir doc_folder_path unless File.exist?(doc_folder_path)
+          Dir.mkdir doc_folder_path unless File.exist?(doc_folder_path)
           return doc_folder_path
 
         }.call

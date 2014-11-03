@@ -8,6 +8,8 @@ describe 'Doc generating' do
     File.write File.join(RackTestPoc.root,'test','sample.html'),
                var.document.to_textile.to_html
 
+    GrapeDoc.generate
+
   end
 
 end

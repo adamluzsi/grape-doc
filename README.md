@@ -11,6 +11,8 @@ Gemfile:
 
 gem 'grape-doc'
 
-Use:
+Simple Use:
 
+  GrapeDoc.generate
 
+#> this will create an api_doc.html in the project folder/doc
