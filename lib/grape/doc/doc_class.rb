@@ -1,20 +1,14 @@
-require 'grape/doc/doc_class/parser'
-require 'grape/doc/doc_class/prototype'
-
-require 'grape/doc/doc_class/list'
-require 'grape/doc/doc_class/link'
-require 'grape/doc/doc_class/table'
-require 'grape/doc/doc_class/header'
-require 'grape/doc/doc_class/sidebar'
-
 module GrapeDoc
 
   class ApiDocumentation < Array
 
+    def create(type,*args)
+      raise(ArgumentError,'invalid type') unless [String,Symbol].any?{ |klass| type.class <= klass }
+      return Helpers.constantize("GrapeDoc::ApiDocParts::#{Helpers.camelize(type)}").new(*args)
+    end
+
     def add(type,*args)
-      raise(ArgumentError,'invalid type')       unless [String,Symbol].any?{ |klass| type.class <= klass }
-      raise(ArgumentError,'invalid arguments')  unless [String,Symbol].any?{ |klass| args.any?{|e| e.class <= klass } }
-      self.push(Helpers.constantize("GrapeDoc::ApiDocParts::#{Helpers.camelize(type)}").new(*args))
+      self.push(create(type,*args))
     end
 
     def br(int=1)
@@ -23,7 +17,8 @@ module GrapeDoc
     end
 
     def to_textile
-      self.map{|e| e.to_textile }.join("\n")
+      require 'RedCloth'
+      RedCloth.new(self.map{|e| e.to_textile }.join("\n"))
     end;alias to_s to_textile
 
   end

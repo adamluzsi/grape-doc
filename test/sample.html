@@ -1,0 +1,27 @@
+<h1>Rest Api Documentation (grape-doc)</h1>
+<h2><span class="caps">GET</span>: /hello(.:format)</h2>
+<h3>Request</h3>
+<h4>description</h4>
+<ul>
+	<li>Hello world!</li>
+</ul>
+<h4>params</h4>
+<ul>
+	<li>test
+	<ul>
+		<li>required: false</li>
+		<li>type: String</li>
+		<li>desc: it&#8217;s a test string</li>
+	</ul></li>
+</ul>
+<h3>Response</h3>
+<h4>body</h4>
+<pre>{"hello":"world!"}</pre>
+<h5>options:</h5>
+<ul>
+	<li>&#8217;status code: 200</li>
+	<li>format: json</li>
+</ul>
+<h4>example</h4>
+<h5>curl sample</h5>
+<pre>curl -X GET "http://api_url/hello?test=hy"</pre>

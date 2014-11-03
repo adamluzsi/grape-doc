@@ -8,13 +8,13 @@ module GrapeDoc
           @markdown=obj
         end
         def markdown
-          @markdown || self.to_s.downcase
+          @markdown || self.to_s.split('::')[-1].downcase
         end
       end
 
-      def initialize(object)
-        object = Parser.parse(object)
-        self.replace(object)
+      def initialize(*args)
+        args[0] = Parser.parse(args[0])
+        self.replace(args[0])
       end
 
       def markdown
@@ -28,7 +28,7 @@ module GrapeDoc
     class StringObject < StringBasic
 
       def to_textile
-        "#{markdown}. #{self.to_s}"
+        "#{markdown}. #{self.to_s}\n"
       end
 
     end
@@ -36,7 +36,7 @@ module GrapeDoc
     class StringObjectEnded < StringObject
 
       def to_textile
-        "#{markdown}#{self}#{markdown}"
+        "#{markdown}#{self}#{markdown}\n"
       end
 
     end
@@ -66,13 +66,23 @@ module GrapeDoc
           case e
 
             when ArrayObject
-              e.map{|e| "#{markdown}#{e.to_textile}" }.join("\n")
+              e.map{|e|
+
+                text = if e.respond_to?(:to_textile)
+                         e.to_textile
+                       else
+                         e.to_s
+                       end
+
+                "#{markdown}#{markdown} #{text}"
+
+              }.join("\n")
 
             else
               "#{markdown} #{e}"
 
           end
-        }.join("\n")
+        }.push('').join("\n")
       end
 
     end

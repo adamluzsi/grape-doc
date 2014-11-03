@@ -8,7 +8,16 @@ module GrapeDoc
           case object
 
             when Array
-              object.map{|e| self.format_parse(*e) }
+              object.map{|e|
+                case e
+                  when Array
+                    e.dup
+
+                  else
+                    self.format_parse(*e)
+
+                end
+              }
 
             else
               # self.format_parse(object)

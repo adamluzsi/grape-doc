@@ -9,6 +9,15 @@ module GrapeDoc
         end if block_given?
       end
 
+      def doc_folder_path
+        @doc_folder_path ||= -> {
+          doc_folder_path = File.join(RackTestPoc.root,'doc')
+          File.mkdir doc_folder_path unless File.exist?(doc_folder_path)
+          return doc_folder_path
+
+        }.call
+      end
+
       def poc_file_path
         return Dir.glob(
             File.join(RackTestPoc.root,'test','poc','*.{yml,yaml}')
@@ -87,16 +96,13 @@ module GrapeDoc
       # +underscore+, though there are cases where that does not hold:
       #
       #   'SSLError'.underscore.camelize # => "SslError"
-      def camelize(term, uppercase_first_letter = true)
+      def camelize(term)
         string = term.to_s
-        if uppercase_first_letter
-          string = string.sub(/^[a-z\d]*/) { inflections.acronyms[$&] || $&.capitalize }
-        else
-          string = string.sub(/^(?:#{inflections.acronym_regex}(?=\b|[A-Z_])|\w)/) { $&.downcase }
-        end
-        string.gsub!(/(?:_|(\/))([a-z\d]*)/i) { "#{$1}#{inflections.acronyms[$2] || $2.capitalize}" }
+        string.capitalize!
+        string.gsub!(/(?:_|(\/))([a-z\d]*)/i) { "#{$1}#{$2.capitalize}" }
         string.gsub!('/', '::')
         string
+
       end
 
     end
