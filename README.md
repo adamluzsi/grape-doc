@@ -1,4 +1,16 @@
 Grape-Doc
 ========
 
-Grape documentation generator, it's in alpha stage!
+Grape documentation generator
+
+install:
+
+  gem install grape-doc
+  
+Gemfile:
+
+gem 'grape-doc'
+
+Use:
+
+

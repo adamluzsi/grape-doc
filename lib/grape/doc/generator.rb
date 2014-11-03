@@ -22,8 +22,9 @@ module GrapeDoc
 
     def save
       File.write File.join(Helpers.doc_folder_path,'api_doc.html'),
-                 RedCloth.new(document.to_textile).to_html
+                 document.to_textile.to_html
 
+      true;rescue;false
     end;alias save! save
 
     private
