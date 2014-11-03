@@ -23,22 +23,24 @@ module GrapeDoc
         next unless -> { rest_api_model < Grape::API rescue false }.call
         rest_api_model.routes.each do |route|
 
-          api_doc.add :h2, "Request: #{route.route_method.to_s.upcase}: #{route.route_path}"
-          api_doc.add :h3, 'description'
+          api_doc.add :h2, "#{route.route_method.to_s.upcase}: #{route.route_path}"
+          api_doc.add :h3, 'Request'
+          api_doc.add :h4, 'description'
           var = case route.route_description
 
                   when Hash
-                    route.route_description.find{|k,v| k == 'desc' || k == :desc }[1]
+                    (route.route_description.find{|k,v| k == 'desc' || k == :desc } || [])[1] || ''
 
                   when Array
-                    route.route_description.join
+                    route.route_description
 
                   else
-                    route.route_description
+                    route.route_description.to_s
 
                 end
 
-          api_doc.add :list,[var]
+          api_doc.add :list,[*var]
+
 
 
         end

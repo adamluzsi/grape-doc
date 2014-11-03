@@ -11,7 +11,8 @@ module GrapeDoc
               object.map{|e| self.format_parse(*e) }
 
             else
-              self.format_parse(object)
+              # self.format_parse(object)
+              object
 
           end
         end

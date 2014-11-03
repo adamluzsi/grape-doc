@@ -2,6 +2,25 @@ module GrapeDoc
   module Helpers
     class << self
 
+      def each_grape_class
+        ::ObjectSpace.each_object(::Class) do |api_class|
+          next unless -> { api_class < Grape::API rescue false }.call
+          yield(api_class)
+        end if block_given?
+      end
+
+      def poc_file_path
+        return Dir.glob(
+            File.join(RackTestPoc.root,'test','poc','*.{yml,yaml}')
+        ).max_by(&File.method(:ctime))
+      end
+
+      def poc_data
+        require 'yaml'
+        YAML.load(File.read(poc_file_path))
+      rescue;{}
+      end
+
       # Tries to find a constant with the name specified in the argument string.
       #
       #   'Module'.constantize     # => Module
