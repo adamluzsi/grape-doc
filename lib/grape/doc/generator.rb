@@ -88,13 +88,12 @@ module GrapeDoc
             }
 
             document.add :h3,'Response'
+            document.add :h4,'example'
 
             poc_cases.each do |poc_path,poc_data|
               poc_opts = poc_data[route_method_var] || next
 
-              document.add :h4,'example'
-
-              document.add :h5,'curl sample'
+              document.add :h5,"curl sample with #{poc_path}"
               document.add :raw,[
                   "$ curl ",
                   "-X #{route_method_var} ",
