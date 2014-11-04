@@ -53,7 +53,7 @@ module GrapeDoc
           var = case route.route_description
 
                   when Hash
-                    (route.route_description.find{|k,v| k == 'desc' || k == :desc } || [])[1] || ''
+                    (route.route_description.find{ |k,v| k == 'desc' || k == :desc } || [])[1] || ''
 
                   when Array
                     route.route_description
@@ -107,28 +107,23 @@ module GrapeDoc
                   "format type: #{poc_opts['response']['format']}"
               ]
 
-              document.add :h6,'raw body'
+              document.add :h6,'raw response body'
               document.add :raw,poc_opts['response']['raw_body']
 
               if JSON.respond_to?(:pretty_generate)
 
                 document.add :h6,'json formatted body with Class types'
-                document.add :raw,
-                             JSON.pretty_generate(
-                                 ApiDocParts::Parser.typer(poc_opts['response']['body'])
-                             )
+                pretty_object = JSON.pretty_generate(
+                                 Parser.typer(poc_opts['response']['body'])
+                             ) rescue Parser.typer(poc_opts['response']['body'])
+
+                document.add :raw,pretty_object
+
 
               end
 
 
             end
-
-            if -> { @poc_data[route_path_var][route.route_method.to_s.upcase] rescue nil }.call
-              poc_opts = @poc_data[route_path_var][route.route_method.to_s.upcase]
-
-
-            end
-
 
           end
         end
