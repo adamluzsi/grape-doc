@@ -105,10 +105,11 @@ module GrapeDoc
                   "curl ",
                   "-X #{route.route_method.to_s.upcase} ",
                   "\"http://api_url#{route_path_var}?",
-                  "#{poc_opts['request']['query']['raw']}\""
+                  "#{poc_opts['request']['query']['raw']}\" ",
+                  poc_opts['request']['headers'].select{
+                      |k,v| k != 'HTTP_HOST' &&  v != ''
+                  }.map{|k,v| "-H \"#{k.to_s.sub(/^HTTP_/,'')}: #{v}\"" }.join(' ')
               ].join
-
-
 
             end
 

@@ -9,6 +9,8 @@ describe 'Dummy test for rack-test-poc' do
 
   specify 'test the get call' do
 
+    header("Accept-Version","v1")
+    header("X-Token","blabla")
     get '/hello',test: 'hy'
     last_response.status.must_be :==, 200
 
