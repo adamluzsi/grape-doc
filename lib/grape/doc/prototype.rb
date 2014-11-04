@@ -28,7 +28,7 @@ module GrapeDoc
     class StringObject < StringBasic
 
       def to_textile
-        "#{markdown}. #{self.to_s}\n"
+        "#{markdown}. #{self.to_s}"
       end
 
     end
@@ -36,7 +36,7 @@ module GrapeDoc
     class StringObjectEnded < StringObject
 
       def to_textile
-        "#{markdown}#{self}#{markdown}\n"
+        "#{markdown}#{self}#{markdown}"
       end
 
     end
@@ -82,7 +82,7 @@ module GrapeDoc
               "#{markdown} #{e}"
 
           end
-        }.push('').join("\n")
+        }.join("\n")
       end
 
     end

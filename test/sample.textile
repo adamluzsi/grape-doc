@@ -1,0 +1,54 @@
+h1. Rest Api Documentation (grape-doc)
+
+h2. GET: /hello(.:format)
+
+h3. Request
+
+h4. description
+
+* Hello world!
+
+h4. params
+
+* test
+** required: false
+** type: String
+** desc: it's a test string
+
+h3. Response
+
+h4. example
+
+h5. curl sample with /hello
+
+<pre>$ curl -X GET "http://example.org/hello?test=hy" -H "Accept-Version: v1" -H "X-Token: blabla"</pre>
+
+* status code: 200
+* format type: json
+
+h6. raw response body
+
+<pre>{"hello":"world!"}</pre>
+
+h6. json formatted body with Class types
+
+<pre>{
+  "hello": "String"
+}</pre>
+
+h5. curl sample with /hello.json
+
+<pre>$ curl -X GET "http://example.org/hello.json?" -H "Accept-Version: v1" -H "X-Token: blabla"</pre>
+
+* status code: 200
+* format type: json
+
+h6. raw response body
+
+<pre>{"hello":"world!"}</pre>
+
+h6. json formatted body with Class types
+
+<pre>{
+  "hello": "String"
+}</pre>

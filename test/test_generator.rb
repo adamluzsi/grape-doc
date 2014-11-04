@@ -4,7 +4,7 @@ describe 'Doc generating' do
   specify 'test documentation generator' do
 
     var = GrapeDoc.new
-    GrapeDoc.generate path: File.join(__dir__,'sample.html')
+    GrapeDoc.generate path: File.join(__dir__,'sample.html'),format: 'redmine'
 
   end
 

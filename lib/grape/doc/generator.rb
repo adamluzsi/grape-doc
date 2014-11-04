@@ -8,7 +8,7 @@ module GrapeDoc
       raise(ArgumentError,'invalid options given') unless opts.class <= Hash
       @options = {
         'format' => 'html',
-		'path'   => File.join(Helpers.doc_folder_path,'api_doc.html')
+		    'path'   => File.join(Helpers.doc_folder_path,'api_doc.html')
       }.merge(opts.reduce({}){|m,o| m.merge!(o[0].to_s => o[1]) ;m})
 
       process_head
@@ -23,8 +23,18 @@ module GrapeDoc
 
     def save
 
-      File.write self.options['path'],
-                 document.to_textile.to_html
+      case @options['format'].to_s.downcase
+
+        when /redmine/,/textile/
+          File.write self.options['path'].sub(/\..*$/,'.textile'),
+                     document.to_textile
+
+        else
+          File.write self.options['path'].sub(/\..*$/,'.html'),
+                     document.to_textile.to_html
+
+
+      end
 
       true;rescue;false
     end;alias save! save
