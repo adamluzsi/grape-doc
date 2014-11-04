@@ -84,7 +84,7 @@ module GrapeDoc
             route_method_var = route.route_method.to_s.upcase
 
             poc_cases = @poc_data.select{|k,v|
-              k =~ /^#{route_path_var}/ && v.keys.include?(route_method_var)
+              k =~ /^#{route_path_var}\.?/ && v.keys.include?(route_method_var)
             }
 
             document.add :h3,'Response'
