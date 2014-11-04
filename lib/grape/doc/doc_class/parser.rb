@@ -48,6 +48,24 @@ module GrapeDoc
 
         end
 
+        def typer(obj)
+          case obj
+
+            when Array
+              obj.map(&:typer)
+
+            when Hash
+              obj.reduce({}){|m,o| m.merge!(o[0] => typer(o[1]) ) ;m}
+
+            when Class,Module
+              obj
+
+            else
+              obj.class
+
+          end
+
+        end
 
       end
     end

@@ -4,10 +4,7 @@ describe 'Doc generating' do
   specify 'test documentation generator' do
 
     var = GrapeDoc.new
-    puts var.document.to_textile
-    # File.write File.join(RackTestPoc.root,'test','sample.html'),
-    #            var.document.to_textile.to_html
-
+    GrapeDoc.generate path: File.join(__dir__,'sample.html')
 
   end
 

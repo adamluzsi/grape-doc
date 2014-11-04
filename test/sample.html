@@ -1,0 +1,43 @@
+<h1>Rest Api Documentation (grape-doc)</h1>
+<h2><span class="caps">GET</span>: /hello(.:format)</h2>
+<h3>Request</h3>
+<h4>description</h4>
+<ul>
+	<li>Hello world!</li>
+</ul>
+<h4>params</h4>
+<ul>
+	<li>test
+	<ul>
+		<li>required: false</li>
+		<li>type: String</li>
+		<li>desc: it&#8217;s a test string</li>
+	</ul></li>
+</ul>
+<h3>Response</h3>
+<h4>example</h4>
+<h5>curl sample</h5>
+<pre>$ curl -X GET "http://example.org/hello?test=hy" -H "Accept-Version: v1" -H "X-Token: blabla"</pre>
+<ul>
+	<li>status code: 200</li>
+	<li>format type: json</li>
+</ul>
+<h6>raw body</h6>
+<pre>{"hello":"world!"}</pre>
+<h6>json formatted body with Class types</h6>
+<pre>{
+  "hello": "String"
+}</pre>
+<h4>example</h4>
+<h5>curl sample</h5>
+<pre>$ curl -X GET "http://example.org/hello.json?" -H "Accept-Version: v1" -H "X-Token: blabla"</pre>
+<ul>
+	<li>status code: 200</li>
+	<li>format type: json</li>
+</ul>
+<h6>raw body</h6>
+<pre>{"hello":"world!"}</pre>
+<h6>json formatted body with Class types</h6>
+<pre>{
+  "hello": "String"
+}</pre>
