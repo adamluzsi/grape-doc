@@ -14,7 +14,7 @@ module GrapeDoc
 
       def initialize(*args)
         args[0] = Parser.parse(args[0])
-        self.replace(args[0])
+        self.replace(args[0].to_s)
       end
 
       def markdown
