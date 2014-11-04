@@ -52,10 +52,10 @@ module GrapeDoc
           case obj
 
             when Array
-              obj.map(&:typer)
+              obj.map{ |e| typer(e) }
 
             when Hash
-              obj.reduce({}){|m,o| m.merge!(o[0] => typer(o[1]) ) ;m}
+              obj.reduce({}){|m,o| m.merge!(o[0] => styper(o[1]) ) ;m}
 
             when Class,Module
               obj
