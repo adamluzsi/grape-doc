@@ -13,6 +13,12 @@ module GrapeDoc
       end
 
       def initialize(*args)
+
+        @opts = args.select{|e| e.class <= ::Hash }
+        args -= @opts
+
+        @opts = @opts.reduce({}){|m,o| m.merge!(o[0].to_s => o[1]) ;m}
+
         args[0] = Parser.parse(args[0])
         self.replace(args[0].to_s)
       end
@@ -21,27 +27,49 @@ module GrapeDoc
         self.class.markdown
       end
 
-      alias to_textile to_s
+      def to_textile
+        case @opts['style'].to_s.downcase
+
+          when /^mirror/
+            "#{markdown}#{self}#{markdown}"
+
+          when /^start/,/^begin/
+
+            options = [
+                @opts['class']  ? "#{@opts['class']}" : nil,
+                @opts['id']     ? "##{@opts['id']}" : nil
+            ].compact
+
+            [
+                markdown,
+                options.empty? ? nil : "(#{options.join(' ')})",
+                '. ',
+                self.to_s
+            ].compact.join
+
+          else
+            self.to_s
+
+        end
+      end
 
     end
 
     class StringObject < StringBasic
-
-      def to_textile
-        "#{markdown}. #{self.to_s}"
+      def initialize(*args)
+        super
+        @opts['style']= 'start'
       end
-
     end
 
     class StringObjectEnded < StringObject
-
-      def to_textile
-        "#{markdown}#{self}#{markdown}"
+      def initialize(*args)
+        super
+        @opts['style']= 'mirror'
       end
-
     end
 
-    class ArrayObject < Array
+    class ArrayBasic < Array
 
       class << self
         def markdown=(obj)
@@ -85,6 +113,9 @@ module GrapeDoc
         }.join("\n")
       end
 
+    end
+
+    class ArrayObject < ArrayBasic
     end
 
   end

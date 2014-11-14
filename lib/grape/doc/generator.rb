@@ -13,8 +13,8 @@ module GrapeDoc
       self.options['path'] = self.options['path'].to_s.sub(/\..*$/,'')
 
       process_head
-      process_table_of_content
       process_endpoints
+      process_table_of_content
 
     end
 
@@ -48,6 +48,7 @@ module GrapeDoc
 
     def process_table_of_content
       #TODO: Table of content here!
+      document.insert 1, ApiDocParts::TOC.create_toc
     end
 
     def process_endpoints

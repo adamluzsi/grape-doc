@@ -21,7 +21,7 @@ module GrapeDoc
 
       def poc_file_path
         return Dir.glob(
-            File.join(RackTestPoc.root,'test','poc','*.{yml,yaml}')
+            File.join(::RackTestPoc.root,'test','poc','*.{yml,yaml}')
         ).max_by(&File.method(:ctime))
       end
 

@@ -13,7 +13,7 @@ module GrapeDoc
 
     def to_textile
       require 'RedCloth'
-      RedCloth.new(self.map{|e| e.to_textile }.join("\n\n"))
+      RedCloth.new(self.map{|e| e.respond_to?(:to_textile) ? e.to_textile : e.to_s }.join("\n\n"))
     end;alias to_s to_textile
 
   end
