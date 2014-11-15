@@ -2,6 +2,11 @@ module GrapeDoc
 
   class ApiDocumentation < Array
 
+    def initialize(opts={})
+      raise(ArgumentError) unless opts.class <= Hash
+      @opts = opts.reduce({}){|m,o| m.merge!(o[0].to_s => o[1].to_s.downcase) ;m}
+    end
+
     def build(type,*args)
       raise(ArgumentError,'invalid type') unless [String,Symbol].any?{ |klass| type.class <= klass }
       return Helpers.constantize("GrapeDoc::ApiDocParts::#{Helpers.camelize(type)}").new(*args)
@@ -13,9 +18,16 @@ module GrapeDoc
 
     def add_toc(*args)
       @toc_added ||= ->{
+        case @opts['format']
 
-        args.map!{|e| Helpers.constantize("GrapeDoc::ApiDocParts::#{Helpers.camelize(e)}") }
-        self.insert(1,ApiDocParts::TOC.new(*self.select{|e| args.any?{|klass| e.class == klass }}))
+          when 'redmine'
+            self.insert(1,'{{toc}}')
+
+          else
+            args.map!{|e| Helpers.constantize("GrapeDoc::ApiDocParts::#{Helpers.camelize(e)}") }
+            self.insert(1,ApiDocParts::TOC.new(*self.select{|e| args.any?{|klass| e.class == klass }}))
+
+        end
         true
 
       }.call

@@ -39,7 +39,7 @@ module GrapeDoc
     private
 
     def document
-      @api_doc ||= ApiDocumentation.new
+      @api_doc ||= ApiDocumentation.new(format: @options['format'])
     end
 
     def process_head
@@ -104,12 +104,20 @@ module GrapeDoc
             k =~ /^#{route_path_var}\.?/ && v.keys.include?(route_method_var)
           }
 
-          document.add :h3,'Response'
-          document.add :h4,'Example(s)'
 
           poc_cases.each do |poc_path,poc_data|
             poc_examples = poc_data[route_method_var] || next
             poc_examples.each_with_index do |poc_opts,i|
+
+              @resp_head ||= {}
+              @resp_head["#{route_method_var}:#{route_method_var}"] ||= ->{
+
+                document.add :h3,'Response'
+                document.add :h4,'Example(s)'
+
+                true
+              }.call
+
               i = i + 1
               begin
 
