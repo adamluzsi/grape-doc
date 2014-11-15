@@ -1,25 +1,34 @@
 module GrapeDoc
   class ApiDocParts
 
-    module TOC
-      class << self
+    class TOC
 
-        def add_header(header_obj)
-          if [H1,H2].include? header_obj.class
-            (@headers ||= []).push(header_obj)
-          end
-        end
-
-        def create_toc
-          @headers.map { |header_obj|
-            [
-                '*' * header_obj.markdown.scan(/\d+$/)[0].to_i,
-                " \"#{header_obj.to_s}\":##{header_obj.instance_variable_get(:@opts)['id']}"
-            ].join
-          }.join("\n") + "\n\n"
-        end
-
+      def headers
+        @headers ||= []
       end
+
+      def initialize(*args)
+        headers.push(*args)
+      end
+
+      def add_header(header_obj)
+        headers.push(header_obj)
+      end
+
+      def to_textile
+        headers.map { |header_obj|
+          [
+              '*' * header_obj.markdown.scan(/\d+$/)[0].to_i,
+              " \"#{header_obj.to_s}\":##{header_obj.instance_variable_get(:@opts)['id']}"
+          ].join
+        }.join("\n") + "\n\n"
+      end
+
+      def clear
+        headers.clear
+      end
+
+
     end
 
     class H1 < StringObject
@@ -27,7 +36,6 @@ module GrapeDoc
       def initialize(*args)
         super
         @opts['id']= SecureRandom.uuid
-        TOC.add_header(self)
       end
 
     end

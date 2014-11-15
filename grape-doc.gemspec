@@ -23,6 +23,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'loader'
   spec.add_dependency 'RedCloth'
   spec.add_dependency 'rack-test'
-  spec.add_dependency 'rack-test-poc','1.1.0'
+  spec.add_dependency 'rack-test-poc','>= 3.0.0'
 
 end
